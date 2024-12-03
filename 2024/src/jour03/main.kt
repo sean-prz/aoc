@@ -14,7 +14,7 @@ object Part1 {
     fun main() {
         val input = readInput()
         val listOfMuls = findOperatorInString(input)
-        val res = listOfMuls.map{ extractNumbers(it) }.map { it.reduce{acc, i -> acc * i} }.reduce( {acc, i -> acc + i})
+        val res = listOfMuls.map{ extractNumbers(it) }.map { it.reduce{acc, i -> acc * i} }.reduce { acc, i -> acc + i }
         print(res)
     }
 
@@ -26,10 +26,7 @@ object Part1 {
     // takes a string and returns a list of two numbers.
     fun extractNumbers(string: String) : List<Int> {
         val regex = Regex("mul\\((\\d+),(\\d+)\\)")
-        val match = regex.find(string)
-        if (match == null) {
-            return emptyList()
-        }
+        val match = regex.find(string) ?: return emptyList()
         return match.groupValues.drop(1).map{it.toInt()}
     }
 }
@@ -40,7 +37,7 @@ object Part2 {
         println(sanitizedInput)
         val inputWithoutMuls = removeMulsbetweendonts(sanitizedInput)
         println(inputWithoutMuls)
-        val res = inputWithoutMuls.map{ Part1.extractNumbers(it) }.map { it.reduce{ acc, i -> acc * i} }.reduce( { acc, i -> acc + i})
+        val res = inputWithoutMuls.map{ Part1.extractNumbers(it) }.map { it.reduce{ acc, i -> acc * i} }.reduce { acc, i -> acc + i }
         println(res)
     }
 }
