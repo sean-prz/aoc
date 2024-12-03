@@ -5,13 +5,13 @@ import java.io.File
 
 fun main() {
     println("Part 1 : ")
-    part1().part1()
+    Part1.main()
     println("\n ======= ")
     println("Part 2 : ")
-    part2().part2()
+    Part2.main()
 }
-class part1 {
-    fun part1() {
+object Part1 {
+    fun main() {
         val input = readInput()
         val listOfMuls = findOperatorInString(input)
         val res = listOfMuls.map{ extractNumbers(it) }.map { it.reduce{acc, i -> acc * i} }.reduce( {acc, i -> acc + i})
@@ -33,14 +33,14 @@ class part1 {
         return match.groupValues.drop(1).map{it.toInt()}
     }
 }
-class part2 {
-    fun part2() {
+object Part2 {
+    fun main() {
         val input = readInput()
         val sanitizedInput = sanitizeInput(input)
         println(sanitizedInput)
         val inputWithoutMuls = removeMulsbetweendonts(sanitizedInput)
         println(inputWithoutMuls)
-        val res = inputWithoutMuls.map{ part1().extractNumbers(it) }.map { it.reduce{acc, i -> acc * i} }.reduce( {acc, i -> acc + i})
+        val res = inputWithoutMuls.map{ Part1.extractNumbers(it) }.map { it.reduce{ acc, i -> acc * i} }.reduce( { acc, i -> acc + i})
         println(res)
     }
 }
