@@ -1,6 +1,6 @@
 package jour03
 
-import java.io.File
+import helper.Helper.readInput
 
 
 fun main() {
@@ -12,7 +12,7 @@ fun main() {
 }
 object Part1 {
     fun main() {
-        val input = readInput()
+        val input = readInput("03")
         val listOfMuls = findOperatorInString(input)
         val res = listOfMuls.map{ extractNumbers(it) }.map { it.reduce{acc, i -> acc * i} }.reduce { acc, i -> acc + i }
         print(res)
@@ -32,7 +32,7 @@ object Part1 {
 }
 object Part2 {
     fun main() {
-        val input = readInput()
+        val input = readInput("03")
         val sanitizedInput = sanitizeInput(input)
         println(sanitizedInput)
         val inputWithoutMuls = removeMulsbetweendonts(sanitizedInput)
@@ -66,8 +66,3 @@ fun removeMulsbetweendonts(input : List<String>) : List<String> {
     return result
 }
 
-
-fun readInput() : String {
-    val file = File( "./src/jour03/input03.txt")
-    return file.readText()
-}
