@@ -18,22 +18,20 @@ object Part1And2 {
     // Enums
     enum class Direction(val dx: Int, val dy: Int) {
         UP(-1, 0),
+        RIGHT(0, 1),
         DOWN(1, 0),
-        LEFT(0, -1),
-        RIGHT(0, 1);
+        LEFT(0, -1);
 
         fun turnRight() : Direction {
-            return when (this) {
-                UP -> RIGHT
-                RIGHT -> DOWN
-                DOWN -> LEFT
-                LEFT -> UP
-            }
+            return entries[(ordinal + 1) % entries.size]
         }
     }
 
     // Data classes
-    data class Position(val pos: Pair<Int,Int>, val dir: Direction)
+    data class Position(val pos: Pair<Int,Int>, val dir: Direction) {
+        operator fun plus (dir: Direction) = Position(pos.first + dir.dx to pos.second + dir.dy, dir)
+        fun turnRight(): Position {return Position(pos, dir.turnRight())}
+    }
 
     // Functions
     fun makeGrid(input:String): List<List<Char>> {
@@ -45,12 +43,12 @@ object Part1And2 {
         return x to y
     }
     private fun move(pos: Position, grid: List<List<Char>>) : Position {
-        val newPos = pos.pos.first + pos.dir.dx to pos.pos.second + pos.dir.dy
+        val newPos = pos + pos.dir
 
-            if (grid[newPos.first][newPos.second] == OBSTACLE)
-                return Position(pos.pos, pos.dir.turnRight())
+            if (grid[newPos.pos.first][newPos.pos.second] == OBSTACLE)
+                return pos.turnRight()
             else
-                return Position(newPos, pos.dir)
+                return newPos
     }
     fun detectLoop(grid: List<List<Char>>, startPos: Position) : Boolean {
         val visited = mutableSetOf<Position>()
