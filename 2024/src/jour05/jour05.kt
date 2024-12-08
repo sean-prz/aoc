@@ -5,9 +5,12 @@ import jour05.Part1.findRules
 import jour05.Part1.parseMessages
 
 fun main() {
+    // start a timer
+    Helper.startTimer()
     val input = Helper.readInput("05")
     println(Part1.main(input))
     println(Part2.main(input))
+    Helper.stopTimer()
 }
 
 
